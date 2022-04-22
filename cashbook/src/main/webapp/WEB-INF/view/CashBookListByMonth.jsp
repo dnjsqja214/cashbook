@@ -34,6 +34,13 @@
 		System.out.println(endBlank +" <- endBlank CashBookListByMonth.jsp");
 		System.out.println(totalTd +" <- totalTd CashBookListByMonth.jsp");
 	%>
+	<div>
+		<%=session.getAttribute("sessionMemberId")%>님 반갑습니다.
+		<a href="<%=request.getContextPath()%>/LogoutController">로그아웃</a>
+	</div>
+	<div>
+		<a href="<%=request.getContextPath()%>/SelectMemberOneController?memberId=<%=session.getAttribute("sessionMemberId")%>&memberPw=<%=session.getAttribute("sessionMemberPw")%>">회원정보</a>
+	</div>
 	<h2><%=y%>년 <%=m%>월</h2>
 	<div>
 		<a href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>

@@ -13,6 +13,87 @@ import java.util.Map;
 import vo.Cashbook;
 
 public class CashbookDao {
+	public Cashbook  selectCashBookOne(int cashbookNo) {
+		Cashbook c = new Cashbook();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs= null;
+		// 쿼리
+		String sql = "SELECT cashbook_no cashbookNo, cash_date cashDate, kind, cash, memo, update_date updateDate, create_date createDate FROM cashbook WHERE cashbook_no=?";
+		// db값 넣어주기
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, cashbookNo);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				c.setCashbookNo(rs.getInt("cashbookNo"));
+				c.setCashDate(rs.getString("cashDate"));
+				c.setKind(rs.getString("kind"));
+				c.setCash(rs.getInt("cash"));
+				c.setMemo(rs.getString("memo"));
+				c.setUpdateDate(rs.getString("updateDate"));
+				c.setCreateDate(rs.getString("createDate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return c;
+	}
+	public void deleteCashbook(int cashbookNo) {
+		int row = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		PreparedStatement stmt2 = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn.setAutoCommit(false); // 자동 커밋 해제
+			// cashbook테이블에서 데이터 삭제
+			String sql ="DELETE FROM cashbook WHERE cashbook_no =?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, cashbookNo);
+			// hashtag테이블에서 데이터 삭제
+			String sql2 = "DELETE FROM hashtag WHERE cashbook_no = ?";
+			stmt2 = conn.prepareStatement(sql2);
+			stmt2.setInt(1, cashbookNo);
+			stmt2.executeUpdate();
+			row = stmt.executeUpdate();
+			
+			conn.commit(); // -커밋
+		} catch (Exception e) {
+			try { 
+				conn.rollback(); // -예외가 발생하면 rollback
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			} 
+			e.printStackTrace();
+		} finally {
+			try {
+				// -데이터베이스 자원 반환
+				conn.close();
+				
+				// -디버깅 코드
+				if(row == 1) {
+					System.out.println("[deleteCashBook] hashtag 삭제 성공");
+				} else {
+					System.out.println("[deleteCashBook] hashtag 삭제 실패");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void insertCashbook(Cashbook cashbook, List<String> hashtag) {
 		Connection conn = null;
 		PreparedStatement stmt = null;

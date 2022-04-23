@@ -9,7 +9,7 @@
 <h1>Cashbook</h1>
 <body>
 <div>
-	<a href="<%=request.getContextPath()%>/view/InsertMember.jsp">희원가입</a>
+	<a href="<%=request.getContextPath()%>/InsertMemberController">회원가입</a>
 </div>
 	<form method="post" action="<%=request.getContextPath()%>/LoginController">
 		<table border="1">

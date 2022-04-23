@@ -37,7 +37,6 @@ public class LoginController extends HttpServlet {
 		// 모델 호출
 		MemberDao memberDao = new MemberDao();
 		String returnMemberId = memberDao.selectMemberByIdPW(member);
-		String returnMemberPw = memberDao.selectMemberByIdPW(member);
 		if(returnMemberId == null) {
 			//로그인 실패시 로그인 폼을 재요청
 			response.sendRedirect(request.getContextPath()+"/LoginController");
@@ -46,7 +45,6 @@ public class LoginController extends HttpServlet {
 		// 로그인 성공
 		HttpSession session = request.getSession(); // 현재 연결한 클라이언트에 대한 세션값을 받아온다
 		session.setAttribute("sessionMemberId", returnMemberId);
-		session.setAttribute("sessionMemberPw", returnMemberPw);
 		response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
 	}
 

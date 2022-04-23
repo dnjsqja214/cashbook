@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>회원 가입</h1>
 	<form method="post" action="<%=request.getContextPath()%>/InsertMemberController">
 	<table border="1">
 		<tr>
@@ -23,11 +24,8 @@
 		<tr>
 			<th>성별</th>
 			<td>
-				<select type="radio" name="memberGender">
-					<option value="">등급선택</option>
-	                <option value="man">남자</option>
-	                <option value="womㅁn">여자</option>
-	            </select>
+				<div><input type = "radio" name = "memberGender" value="0">여자</div>
+	         	<div><input type = "radio" name = "memberGender" value="1">남자</div>
 			</td>
 		</tr>
 		<tr>
@@ -37,6 +35,9 @@
 			</td>
 		</tr>
 	</table>
+	<div>
+		<button type="submit">가입</button>
+	</div>
 	</form>
 </body>
 </html>

@@ -16,51 +16,60 @@ import vo.Member;
 @WebServlet("/UpdateMemberPwController")
 public class UpdateMemberPwController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// 접속허가 체크
-	HttpSession session = request.getSession();
-	String sessionMemberId = (String)session.getAttribute("sessionMemberId");
-	System.out.println(sessionMemberId+"<--sessionMemberId");
-	if(sessionMemberId == null) {
-		response.sendRedirect(request.getContextPath()+"/LoginController");
-		return;
-		}
-	MemberDao memberDao = new MemberDao();
-		
-	// 사용자의 개인정보 들고올 메서드 호출해서 member객체에 담기
-	Member member = memberDao.selectMemberOne(sessionMemberId);
-			
-	request.setAttribute("member", member);
-	
-	//뷰 포워딩
-	request.getRequestDispatcher("/WEB-INF/view/UpdateMemberPw.jsp").forward(request, response);
+		// 접속허가 체크
+		HttpSession session = request.getSession();
+		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println(sessionMemberId+"<--sessionMemberId");
+		if(sessionMemberId == null) {
+			response.sendRedirect(request.getContextPath()+"/LoginController");
+			return;
+			}
+		// 만약 error라면 값 받아오기
+		request.setAttribute("error", request.getParameter("error"));
+		//뷰 포워딩
+		request.getRequestDispatcher("/WEB-INF/view/UpdateMemberPw.jsp").forward(request, response);
 	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
 		String memberId="";
 		if(request.getParameter("memberId") != "" && request.getParameter("memberId")!= null ) {
-			memberId = request.getParameter(memberId);
+			memberId = request.getParameter("memberId");
 		}
-		String memberPw = "";
-		if(request.getParameter("memberPw") != "" && request.getParameter("memberPw")!= null ) {
-			memberPw = request.getParameter(memberPw);
+		String currentPw = "";
+		if(request.getParameter("currentPw") != "" && request.getParameter("currentPw")!= null ) {
+			currentPw = request.getParameter("currentPw");
 		}
 		String updatePw="";
 		if(request.getParameter("updatePw") != "" && request.getParameter("updatePw")!= null ) {
-			memberPw = request.getParameter(updatePw);
+			updatePw = request.getParameter("updatePw");
 		}
 		String checkPw="";
 		if(request.getParameter("checkPw") != "" && request.getParameter("checkPw")!= null ) {
-			checkPw = request.getParameter(checkPw);
+			checkPw = request.getParameter("checkPw");
 		}
-		// 입력한 비밀번호랑 세션 비밀번호랑 같다면 통과 아니라면 다시 입력
-		// 바꾼 비밀번호랑 바꾼 비밀번호확인이랑 일치하지않으면 다시 입력
-		if(updatePw != checkPw) {
-			response.sendRedirect(request.getContextPath()+"UpdateMemberPwController");
+		
+		// curruntPw가 맞는지 확인하기 위해서 dao에서 sessionId와 currentPw값을 넣고 result값에 넣기
+		MemberDao memberDao = new MemberDao();
+		Member member = new Member();
+		member.setMemberId(sessionMemberId);
+		member.setMemberPw(currentPw);
+		
+		String result = memberDao.selectMemberByIdPW(member);
+		
+		// result값과 세션아이디가 같다면 통과 아니라면 다시 입력
+		if(!sessionMemberId.equals(result)) {
+			response.sendRedirect(request.getContextPath()+"/UpdateMemberPwController?error=1");
 			return;
 		}
 		
-		MemberDao memberDao = new MemberDao();
+		// 바꾼 비밀번호랑 바꾼 비밀번호확인이랑 일치하지않으면 다시 입력
+		if(!updatePw.equals(checkPw)) {
+			response.sendRedirect(request.getContextPath()+"/UpdateMemberPwController?error=2");
+			return;
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId",memberId);
 		map.put("updatePw",updatePw);
@@ -71,6 +80,6 @@ public class UpdateMemberPwController extends HttpServlet {
 			return;
 		} 
 		// 뷰
-		response.sendRedirect(request.getContextPath()+"LogoutController");
+		response.sendRedirect(request.getContextPath()+"/LogoutController");
 	}
 }

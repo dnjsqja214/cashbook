@@ -159,8 +159,7 @@ public class MemberDao {
 	// 로그인
 	public String selectMemberByIdPW(Member member) {
 		String memberId = null;
-		String memberPw = null;
-		Cashbook c = new Cashbook();
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs= null;
@@ -176,7 +175,6 @@ public class MemberDao {
 			rs = stmt.executeQuery();
 			if(rs.next()) {
 				memberId = rs.getString("memberId");
-				memberPw = rs.getString("memberPw");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

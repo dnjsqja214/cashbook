@@ -21,11 +21,9 @@ public class SelectMemberOneController extends HttpServlet {
 		response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
 		return;
 	}
-	String memberId = request.getParameter("memberId");
-	System.out.println(memberId+"<--MeberIdController");
 	MemberDao memberDao = new MemberDao();
 	Member member = new Member();
-	member = memberDao.selectMemberOne(memberId);
+	member = memberDao.selectMemberOne(sessionMemberId);
 	request.setAttribute("member", member);
 	
 	// 뷰포워딩

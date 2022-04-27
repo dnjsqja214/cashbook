@@ -13,6 +13,7 @@ import vo.Cashbook;
 public class CashBookOneController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        int cashbookNo= Integer.parseInt(request.getParameter("cashbookNo"));
+       System.out.println(cashbookNo+"cashbookNo");
        CashbookDao cashbookDao = new CashbookDao();
        Cashbook cashbook = new Cashbook();
        cashbook= cashbookDao.selectCashBookOne(cashbookNo);

@@ -39,7 +39,7 @@
 		<a href="<%=request.getContextPath()%>/LogoutController">로그아웃</a>
 	</div>
 	<div>
-		<a href="<%=request.getContextPath()%>/SelectMemberOneController?memberId=<%=session.getAttribute("sessionMemberId")%>&memberPw=<%=session.getAttribute("sessionMemberPw")%>">회원정보</a>
+		<a href="<%=request.getContextPath()%>/SelectMemberOneController">회원정보</a>
 	</div>
 	<h2><%=y%>년 <%=m%>월</h2>
 	<div>
@@ -89,9 +89,9 @@
 	 				 					if((Integer)map.get("day") == (i-startBlank)) {
 	 				 			%>
 	 				 						<div>
-	 				 						[<%=map.get("kind")%>] 
-	 				 						<%=map.get("cash")%>원
-	 				 						<%=map.get("memo")%>...
+		 				 						<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=map.get("cashbookNo")%>">[<%=map.get("kind")%>]</a> 
+		 				 						<%=map.get("cash")%>원
+		 				 						<%=map.get("memo")%>...
 	 				 						</div>
 	 				 			<%
 	 				 					}

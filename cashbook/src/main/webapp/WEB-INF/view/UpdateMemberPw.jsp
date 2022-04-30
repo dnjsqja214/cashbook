@@ -5,15 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<%
-	
-	String error = request.getParameter("error");
-	
-	%>
 </head>
 <body>
 	<h1>비밀번호 수정</h1>
 	<%
+	// 유효성 검사
+	String error = request.getParameter("error");
 	String code = "";
 	if("1".equals(error)){
 		code = "현재 비밀번호 올바르지 않습니다.";

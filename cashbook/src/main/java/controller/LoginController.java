@@ -22,7 +22,7 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
 			return;
 		}
-		// 로그인 되어있는 멤버이면 리다이렉트로
+		// 로그인이 되어 있지않다면 다시 로그인 페이지로
 		request.getRequestDispatcher("/WEB-INF/view/Login.jsp").forward(request, response);
 	}
 	// loginAction

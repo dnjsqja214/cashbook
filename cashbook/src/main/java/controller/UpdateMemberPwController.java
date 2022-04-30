@@ -24,7 +24,7 @@ public class UpdateMemberPwController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
 			}
-		// 만약 error라면 값 받아오기
+		// doPost에서 error값 받아오기->updateMemberPw에 에러코드에 따른 유효성검사하기
 		request.setAttribute("error", request.getParameter("error"));
 		//뷰 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/UpdateMemberPw.jsp").forward(request, response);
@@ -34,6 +34,7 @@ public class UpdateMemberPwController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
 		String memberId="";
+		// updateMemberPw.jsp에서 값 받기
 		if(request.getParameter("memberId") != "" && request.getParameter("memberId")!= null ) {
 			memberId = request.getParameter("memberId");
 		}

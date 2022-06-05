@@ -17,7 +17,7 @@ public class MemberDao {
 		int row = 0;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
 			conn.setAutoCommit(false); // 자동커밋을 해제
 			
 			String sql = "INSERT INTO member (member_id,member_pw,member_gender,member_name,create_date) values (?,PASSWORD(?),?,?,now())";
@@ -54,7 +54,7 @@ public class MemberDao {
 		int row = 0;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
 			conn.setAutoCommit(false); // 자동 커밋 해제
 			// cashbook테이블에서 데이터 삭제
 			String sql ="update member set member_pw=? where member_id=?";
@@ -89,7 +89,7 @@ public class MemberDao {
 		// db값 넣어주기
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
 			conn.setAutoCommit(false); // 자동 커밋 해제
 			// 쿼리
 			String sql = "delete from member where member_id=? and member_pw=PASSWORD(?) ";
@@ -131,7 +131,7 @@ public class MemberDao {
 		// db값 넣어주기
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, memberId);
 			rs = stmt.executeQuery();
@@ -168,7 +168,7 @@ public class MemberDao {
 		// db값 넣어주기
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, member.getMemberId());
 			stmt.setString(2, member.getMemberPw());

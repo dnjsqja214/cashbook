@@ -93,10 +93,11 @@ public class CashbookDao {
 			}
 		}
 	}
-	public void insertCashbook(Cashbook cashbook, List<String> hashtag) {
+	public int insertCashbook(Cashbook cashbook, List<String> hashtag) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		int row = 0;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
@@ -111,7 +112,7 @@ public class CashbookDao {
 			stmt.setString(2, cashbook.getKind());
 			stmt.setInt(3, cashbook.getCash());
 			stmt.setString(4, cashbook.getMemo());
-			stmt.executeUpdate(); // insert
+			row = stmt.executeUpdate(); // insert
 			rs = stmt.getGeneratedKeys(); // select 방금입력한 cashbook_no from cashbook
 			int cashbookNo = 0;
 			if(rs.next()) {
@@ -142,7 +143,7 @@ public class CashbookDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
+		} return row;
 	}
 	public List<Map<String, Object>> selectCashbookListByMonth(int y, int m) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();

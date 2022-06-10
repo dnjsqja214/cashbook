@@ -6,6 +6,7 @@
 <title>Insert title here</title>
 </head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
 <body>
 	<nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
 		&nbsp;

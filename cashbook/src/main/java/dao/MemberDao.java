@@ -10,6 +10,42 @@ import java.util.Map;
 import vo.*;
 
 public class MemberDao {
+	// 회원 수정
+	public int updateMember(Member member) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int row = 0;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
+			conn.setAutoCommit(false); // 자동커밋을 해제
+			
+			String sql = "update member set member_gender = ? , member_name = ? where member_id = ?";
+			
+			stmt = conn.prepareStatement(sql); 
+			stmt.setString(1, member.getMemberGender());
+			stmt.setString(2, member.getMemberName());
+			stmt.setString(3, member.getMemberId());
+			
+			row = stmt.executeUpdate(); // insert
+			if(row == 1) {
+				System.out.println("수정성공");
+			} else {
+				System.out.println("수정실패");
+			}
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
 	// 회원가입
 	public int insertMember(Member member) {
 		Connection conn = null;

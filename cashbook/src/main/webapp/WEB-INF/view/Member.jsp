@@ -10,33 +10,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<style>
+   .bottom {margin-bottom:80px;}
+   .top {margin-top:30px;}
+   .plus {color : #487AB8;}
+   .minus {color: #e33950f2;}
+	hr {margin-top: 1.5rem;}
+</style>
 </head>
+<jsp:include page="/WEB-INF/view/upMenu.jsp"></jsp:include>
 <body>
-	<h1>개인정보</h1>
-	<table border="1">
-		<tr>
-			<th>아이디</th>
-			<td><%=m.getMemberId()%></td>
-		</tr>
-		<tr>
-			<th>생성날짜</th>
-			<td><%=m.getCreateDate()%></td>
-		</tr>
-		<tr>
-			<th>성함</th>
-			<td><%=m.getMemberName()%></td>
-		</tr>
-		<tr>
-			<th>성별</th>
-			<td><%=m.getMemberGender()%></td>
-		</tr>
-		<tr>
-			<td>
-				<a href="<%=request.getContextPath()%>/UpdateMemberPwController">비밀번호 수정</a>
-			</td>
-		</tr>
-	</table>
-	<a href="<%=request.getContextPath()%>/UpdateMemberPw.jsp?memberPw=<%=m.getMemberPw()%>">회원수정</a>
-	<a href="<%=request.getContextPath()%>/DeleteMemberController?MemberId=<%=memberId%>">회원삭제</a> 
+	<div class="container"><br>
+	<h2 class = "text-center bottom top">개인정보</h2>
+	<div class="row">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+		<table class="table table-bordered">
+			<tr>
+				<th width="100">아이디</th>
+				<td width="500"><%=m.getMemberId()%></td>
+			</tr>
+			<tr>
+				<th width="100" >성함</th>
+				<td width="500"><%=m.getMemberName()%></td>
+			</tr>
+			<tr>
+				<th width="100">성별</th>
+				<td width="500"><%=m.getMemberGender()%></td>
+			</tr>
+			<tr>
+				<th width=100">생성날짜</th>
+				<td width="500"><%=m.getCreateDate()%></td>
+			</tr>
+		</table>
+		<div>
+			<a class="btn btn-warning" role="button" href="<%=request.getContextPath()%>/UpdateMemberPwController">비밀번호 수정</a>
+			<a class="btn btn-outline-warning" role="button" href="<%=request.getContextPath()%>/UpdateMemberController?memberName=<%=m.getMemberName()%>">회원수정</a>
+		</div>
+		</br>
+			<a class="btn btn-danger" role="button" href="<%=request.getContextPath()%>/DeleteMemberController?MemberId=<%=m.getMemberId()%>">회원삭제</a> 
+		</div>
+	</div>
+	</div>
 </body>
 </html>

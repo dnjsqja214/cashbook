@@ -24,32 +24,33 @@
 	<div class="container"><br>
 	<h2 class = "text-center bottom top">개인정보</h2>
 	<div class="row">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-8">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+		<a class="btn btn-outline-secondary" role="button" href="<%=request.getContextPath()%>/CashBookListByMonthController">뒤로가기</a>
 		<table class="table table-bordered">
 			<tr>
-				<th width="100">아이디</th>
+				<th class="table-info" width="100">아이디</th>
 				<td width="500"><%=m.getMemberId()%></td>
 			</tr>
 			<tr>
-				<th width="100" >성함</th>
+				<th class="table-info" width="100" >성함</th>
 				<td width="500"><%=m.getMemberName()%></td>
 			</tr>
 			<tr>
-				<th width="100">성별</th>
+				<th class="table-info" width="100">성별</th>
 				<td width="500"><%=m.getMemberGender()%></td>
 			</tr>
 			<tr>
-				<th width=100">생성날짜</th>
+				<th class="table-info" width=100">생성날짜</th>
 				<td width="500"><%=m.getCreateDate()%></td>
 			</tr>
 		</table>
 		<div>
 			<a class="btn btn-warning" role="button" href="<%=request.getContextPath()%>/UpdateMemberPwController">비밀번호 수정</a>
-			<a class="btn btn-outline-warning" role="button" href="<%=request.getContextPath()%>/UpdateMemberController?memberName=<%=m.getMemberName()%>">회원수정</a>
+			<a class="btn btn-danger float-right" role="button" href="<%=request.getContextPath()%>/DeleteMemberController?MemberId=<%=m.getMemberId()%>">회원삭제</a> 
 		</div>
 		</br>
-			<a class="btn btn-danger" role="button" href="<%=request.getContextPath()%>/DeleteMemberController?MemberId=<%=m.getMemberId()%>">회원삭제</a> 
+			<a class="btn btn-warning" role="button" href="<%=request.getContextPath()%>/UpdateMemberController?memberName=<%=m.getMemberName()%>">회원수정</a>
 		</div>
 	</div>
 	</div>

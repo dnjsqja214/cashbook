@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <style>
+   .bottom {margin-bottom:80px;}
+   .top {margin-top:30px;}
+   .plus {color : #487AB8;}
+   .minus {color: #e33950f2;}
+	hr {margin-top: 1.5rem;}
 	input {
 	  width:400px;
 	  font-size:20px;
@@ -15,7 +20,7 @@
 </head>
 <jsp:include page="/WEB-INF/view/upMenu.jsp"></jsp:include>
 <body>
-	<div class="container">
+	<div class="container"><br>
 	<h2 class = "text-center bottom top">비밀번호 수정</h2>
 	<div class="row">
 		<div class="col-sm-2"></div>
@@ -37,26 +42,26 @@
 		<form method="post" action="UpdateMemberPwController">
 			<table class="table table-bordered">
 				<tr>
-					<th width="150">아이디</th>
+					<th class="table-info" width="150">아이디</th>
 					<td width="550"><%=session.getAttribute("sessionMemberId")%></td>
 					<input type="hidden" name="memberId" value=<%=session.getAttribute("sessionMemberId")%> readonly="readonly">
 				</tr>
 				<tr>
-					<th>현재 비밀번호</th>
+					<th class="table-info">현재 비밀번호</th>
 					<td>
-						<input type="password" name="currentPw">
+						<input type="password" name="currentPw" class = "form-control">
 					</td>
 				</tr>
 				<tr>
-					<th>수정 비밀번호</th>
+					<th class="table-info">수정 비밀번호</th>
 					<td>
-						<input type="password" name="updatePw">
+						<input type="password" name="updatePw" class = "form-control">
 					</td>
 				</tr>
 				<tr>
-					<th>수정 비밀번호 확인</th>
+					<th class="table-info">수정 비밀번호 확인</th>
 					<td>
-						<input type="password" name="checkPw">
+						<input type="password" name="checkPw" class = "form-control">
 					</td>
 				</tr>
 			</table>

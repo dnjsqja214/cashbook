@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +13,79 @@ import java.util.Map;
 import vo.Cashbook;
 
 public class CashbookDao {
+	// 수정위한 메서드
+	public int UpdateCashbook(Cashbook cashBook, List<String> hashtag) {
+		//수정한 행 개수 담을 row 생성
+		int row = 0;
+		Connection conn =null;
+		PreparedStatement stmt =null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://13.124.231.44/cashbook","root","mariadb1234");
+			conn.setAutoCommit(false); // 자동커밋을 해제
+			
+			String CashBookSql = "UPDATE cashbook SET"
+					+"           cash_date=?"
+					+"			 , kind=?"
+					+"			 , cash=?"
+					+"			 , memo=?"
+					+"			 , update_date=NOW()"
+					+"			 , member_id=?"
+					+"	 WHERE cashbook_no=?";
+			
+			stmt = conn.prepareStatement(CashBookSql);
+			stmt.setString(1, cashBook.getCashDate());
+			stmt.setString(2, cashBook.getKind());
+			stmt.setInt(3, cashBook.getCash());
+			stmt.setString(4, cashBook.getMemo());
+			stmt.setString(5, cashBook.getMemberId());
+			stmt.setInt(6, cashBook.getCashbookNo());
+			
+			
+			row = stmt.executeUpdate(); 
+			
+			// hashtag를 저장하기전 해당 태그 삭제 
+			PreparedStatement deleteHashTagStmt = null;
+			for(String h : hashtag) { // for문은 h 사이즈 개수만
+				String deleteHastTagSql = "DELETE FROM hashtag WHERE cashbook_no=?";
+				deleteHashTagStmt = conn.prepareStatement(deleteHastTagSql);
+				deleteHashTagStmt.setInt(1, cashBook.getCashbookNo());
+				deleteHashTagStmt.executeUpdate();
+			}
+			
+			// hashtag를 저장하는 코드
+			PreparedStatement insertHashTagStmt = null;
+			for(String h : hashtag) { // for문은 h 사이즈 개수만
+				String insertHashTagSql = "INSERT INTO hashtag(cashbook_no, tag, create_date) VALUES(?,?,NOW())";
+				insertHashTagStmt = conn.prepareStatement(insertHashTagSql);
+				insertHashTagStmt.setInt(1, cashBook.getCashbookNo());
+				insertHashTagStmt.setString(2, h); // for문 순서대로
+				insertHashTagStmt.executeUpdate();
+			}
+			
+			conn.commit(); // 최종 커밋
+			
+		} catch (Exception e) {
+			try {
+				conn.rollback(); //예외 발생하면 롤백
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				// DB자원반납
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		//수정한 행 개수 담은 row 변수 리턴
+		return row;
+	}
+	
 	public Cashbook  selectCashBookOne(int cashbookNo) {
 		Cashbook c = new Cashbook();
 		Connection conn = null;

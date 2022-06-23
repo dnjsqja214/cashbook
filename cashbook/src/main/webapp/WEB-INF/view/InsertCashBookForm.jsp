@@ -17,10 +17,7 @@
 		<h1 class = "bottom top text-center">가계부 입력하기</h1>
 		<form id="insert" action="<%=request.getContextPath()%>/InsertCashBookController" method="post">
 			<table class = "table table-bordered">
-				<colgroup>
-					<col width = "20%">
-					<col width = "*">
-				</colgroup>
+
 				<tr>
 					<th  class="table-info text-center">날짜</th>
 					<td>
@@ -36,18 +33,18 @@
 					</td>
 				</tr>
 				<tr>
-					<th  class="table-info text-center">금액</th>
+					<th class="table-info text-center">금액</th>
 					<td>
-						<input type="number" id="cash" name="cash" class = "form-control">
+						<input type="number" id="cash" class="form-control">
 						<div id="helpCash"></div>
-					<td>
+					</td>
 				</tr>
 				<tr>
 					<th class="table-info text-center">메모</th>
 					<td>
-						<textarea rows="4" cols="50" id="memo" name="memo" class = "form-control" placeholder = "#해쉬태그를 추가해서 메모 해보세요!"></textarea>
+						<textarea  id="memo" name="memo" class = "form-control" placeholder = "#해쉬태그를 추가해서 메모 해보세요!"></textarea>
 						<div id="helpMemo"></div>
-					<td>
+					</td>
 				</tr>
 			</table>
 			<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class = "btn btn-secondary">이전</a>
